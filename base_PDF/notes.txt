@@ -1,0 +1,27 @@
+# infoSheet
+## never change
+agnecy_code = MWOHK-2023-170
+philippine_agency_name = PLACEWELL INTERNATINOAL SERVICE CORPORATION
+philippine_agency_phone_number = 63285264838
+hk_agency_name = JOJO GOOD WELL EMPLOYMENT
+hk_agency_phone_number = 64656060
+
+
+# Trasmittal Form
+- N/R/T Definition
+    - N = New
+    - R = Renew
+    - T = Transfer
+    - F = Finished
+    - X = Terminated
+
+# id407
+Each blue id407 has unique contract number, no need to print
+## Salary and allowance
+- Default 4870 but allow edit
+- Default 1236 but allow edit
+## never change
+Witness_1 = CHOW SUK FAN
+Witness_2 = CHOW SUK YEE
+
+
