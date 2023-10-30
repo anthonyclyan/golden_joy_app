@@ -1,5 +1,5 @@
 # Overview
-This repo includes an App with GUI that consume user input and output four PDF.
+This repo includes an App with GUI that consume user input and output four PDFs.
 
 1. owwa.pdf
 2. transmittalForm.pdf
@@ -19,8 +19,10 @@ The first three PDF are in the size of A4. The id407.pdf is in the size of A3.
 1. Clone repo to local document
 2. Open Repo in VSCode
 3. Cmd + J to open terminal in VSCode
-4. Run config.sh to set up environment
+4. Allow execution for all codes `>> chmod +x *`
+5. Run config.sh to set up environment `>> ./config.sh`
 
 # How to run the code
 1. Open repo in Terminal or VSCode terminal 
-2. `>> python3 run.py`
+2. Run the run.sh script `>> ./run.sh`
+3. Follow GUI instruction then Submit
