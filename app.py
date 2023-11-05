@@ -5,6 +5,7 @@ from PyQt5.QtGui import QFont
 from datetime import datetime
 from fill_PDF import *
 import math
+import traceback
 
 # Create the main window
 app = QApplication(sys.argv)
@@ -26,14 +27,14 @@ constant_dict = {
     "hk_agency_phone_number": "64656060",
     "philippine_agency_name": "PLACEWELL INTERNATINOAL SERVICE CORPORATION",
     "philippine_agency_phone_number": "63285264838",
-    "philippine_agnecy_code": "MWOHK-2023-170",
+    "philippine_agency_code": "MWOHK-2023-170",
     "witness1_name": "CHOW SUK FUN",
     "witness2_name": "KATHERINE CHOW"
 }
 # Create dictionaries to store user input
 employer_pane_dict = {
    # Misc.
-    "category": "NEW",     # drop down set default category to NEW
+    "contract_category": "NEW",     # drop down set default contract_category to NEW
     "contract_number": "",
     "contract_date": "",
     "owwa_recipt_number": "",
@@ -75,14 +76,14 @@ employer_pane_dict = {
     "employer_servant_share_room_with_how_many_children": "",
     "employer_servant_share_room_with_children_age": "",
     "employer_servant_room_other_with_remarks": "",
-    "employer_provide_light_and_water_supply": "",
-    "employer_provide_toilet_and_bathing_facilities": "",
-    "employer_provide_bed": "",
-    "employer_provide_blankets_or_quilt": "",
-    "employer_provide_pillows": "",
-    "employer_provide_wardrobe": "",
-    "employer_provide_refrigerator": "",
-    "employer_provide_desk": "",
+    "employer_provide_light_and_water_supply": "YES",       # set default to YES
+    "employer_provide_toilet_and_bathing_facilities": "YES",       # set default to YES
+    "employer_provide_bed": "YES",       # set default to YES
+    "employer_provide_blankets_or_quilt": "YES",       # set default to YES
+    "employer_provide_pillows": "YES",       # set default to YES
+    "employer_provide_wardrobe": "YES",       # set default to YES
+    "employer_provide_refrigerator": "NO",       # set default to NO
+    "employer_provide_desk": "NO",       # set default to NO
     "employer_provide_other_facilities": "",
     "employer_expect_other_duties": ""
     }
@@ -132,12 +133,12 @@ def employer_input_changed(text, key):
 for key, value in employer_pane_dict.items():
     formatted_key_string = " ".join(word.capitalize() for word in key.split('_'))
     label = QLabel(formatted_key_string + ":")
-    if key == "category":
-        combo_box = QComboBox()
-        combo_box.addItems(["NEW", "RECONTRACT", "TRANSFER", "FINISHED", "TERMINATED"])
-        combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(combo_box.itemText(selection), key))
+    if key == "contract_category":
+        contract_category_combo_box = QComboBox()
+        contract_category_combo_box.addItems(["NEW", "RECONTRACT", "TRANSFER", "FINISHED", "TERMINATED"])
+        contract_category_combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(contract_category_combo_box.itemText(selection), key))
         employer_layout.addWidget(label)
-        employer_layout.addWidget(combo_box)
+        employer_layout.addWidget(contract_category_combo_box)
     elif key == "contract_date":
         text_input = QLineEdit()
         text_input.setPlaceholderText("YYYY-MM-DD")
@@ -157,11 +158,11 @@ for key, value in employer_pane_dict.items():
         employer_layout.addWidget(label)
         employer_layout.addWidget(text_input)
     elif key == "paid_vacation_for_renew_contract":
-        combo_box = QComboBox()
-        combo_box.addItems(["N/A", "YES", "NO"])
-        combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(combo_box.itemText(selection), key))
+        paid_vacation_for_new_contract_combo_box = QComboBox()
+        paid_vacation_for_new_contract_combo_box.addItems(["N/A", "YES", "NO"])
+        paid_vacation_for_new_contract_combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(paid_vacation_for_new_contract_combo_box.itemText(selection), key))
         employer_layout.addWidget(label)
-        employer_layout.addWidget(combo_box)
+        employer_layout.addWidget(paid_vacation_for_new_contract_combo_box)
     elif key == "employer_birthday":
         text_input = QLineEdit()
         text_input.setPlaceholderText("YYYY-MM-DD")
@@ -186,17 +187,17 @@ for key, value in employer_pane_dict.items():
         employer_layout.addWidget(label)
         employer_layout.addWidget(text_input)
     elif key == "employer_civil_status":
-        combo_box = QComboBox()
-        combo_box.addItems(["SINGLE", "MARRIED", "WIDOW", "LEGALLY SEPARATED", "SOLO"])
-        combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(combo_box.itemText(selection), key))
+        employer_civil_status_combo_box = QComboBox()
+        employer_civil_status_combo_box.addItems(["SINGLE", "MARRIED", "WIDOW", "LEGALLY SEPARATED", "SOLO"])
+        employer_civil_status_combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(employer_civil_status_combo_box.itemText(selection), key))
         employer_layout.addWidget(label)
-        employer_layout.addWidget(combo_box)
+        employer_layout.addWidget(employer_civil_status_combo_box)
     elif key == "employer_residential_type":
-        combo_box = QComboBox()
-        combo_box.addItems(["FLAT", "HOUSE"])
-        combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(combo_box.itemText(selection), key))
+        employer_residential_type_combo_box = QComboBox()
+        employer_residential_type_combo_box.addItems(["FLAT", "HOUSE"])
+        employer_residential_type_combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(employer_residential_type_combo_box.itemText(selection), key))
         employer_layout.addWidget(label)
-        employer_layout.addWidget(combo_box)
+        employer_layout.addWidget(employer_residential_type_combo_box)
     elif key == "employer_residential_size":
         text_input = QLineEdit()
         text_input.setPlaceholderText("(SQ FEET)")
@@ -204,11 +205,11 @@ for key, value in employer_pane_dict.items():
         employer_layout.addWidget(label)
         employer_layout.addWidget(text_input)
     elif key == "employer_servant_own_room":
-        combo_box = QComboBox()
-        combo_box.addItems(["YES", "NO, SHARE WITH CHILD/OTHER", "NO, OTHER"])
-        combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(combo_box.itemText(selection), key))
+        employer_servant_own_room_combo_box = QComboBox()
+        employer_servant_own_room_combo_box.addItems(["YES", "NO, SHARE WITH CHILD/OTHER", "NO, OTHER"])
+        employer_servant_own_room_combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(employer_servant_own_room_combo_box.itemText(selection), key))
         employer_layout.addWidget(label)
-        employer_layout.addWidget(combo_box)
+        employer_layout.addWidget(employer_servant_own_room_combo_box)
     elif key == "employer_servant_own_room_size":
         text_input = QLineEdit()
         text_input.setPlaceholderText("(SQ FEET)")
@@ -361,11 +362,11 @@ for key, value in helper_pane_dict.items():
         helper_layout.addWidget(helper_gender_radio_button_1)
         helper_layout.addWidget(helper_gender_radio_button_2)
     elif key == "helper_civil_status":
-        combo_box = QComboBox()
-        combo_box.addItems(["SINGLE", "MARRIED", "WIDOW", "LEGALLY SEPARATED", "SOLO"])
-        combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(combo_box.itemText(selection), key))
+        helper_civil_status_combo_box = QComboBox()
+        helper_civil_status_combo_box.addItems(["SINGLE", "MARRIED", "WIDOW", "LEGALLY SEPARATED", "SOLO"])
+        helper_civil_status_combo_box.currentIndexChanged.connect(lambda selection, key=key: helper_input_changed(helper_civil_status_combo_box.itemText(selection), key))
         helper_layout.addWidget(label)
-        helper_layout.addWidget(combo_box)
+        helper_layout.addWidget(helper_civil_status_combo_box)
     elif key == "helper_passport_issue_date":
         text_input = QLineEdit()
         text_input.setPlaceholderText("YYYY-MM-DD")
@@ -452,19 +453,20 @@ def on_submit():
             combined_data["helper_philippine_contact_person_address_1"], combined_data["helper_philippine_contact_person_address_2"], combined_data["helper_philippine_contact_person_address_3"] = split_long_string(combined_data["helper_philippine_contact_person_address"], max_length)
     except Exception as e:
         print(f'Error: {e}')
+        traceback.print_exc()
     
     # infoSheet
     try:
-        # Contract category check box
-        if combined_data["category"] == "NEW":
+        # Contract contract_category check box
+        if combined_data["contract_category"] == "NEW":
             combined_data["category_new"] = "X"
-        elif combined_data["category"] == "RECONTRACT":
+        elif combined_data["contract_category"] == "RECONTRACT":
             combined_data["category_recontract"] = "X"
-        elif combined_data["category"] == "TRANSFER":
+        elif combined_data["contract_category"] == "TRANSFER":
             combined_data["category_transfer"] = "X"
-        elif combined_data["category"] == "FINISHED":
+        elif combined_data["contract_category"] == "FINISHED":
             combined_data["category_finished"] = "X"
-        elif combined_data["category"] == "TERMINATED":
+        elif combined_data["contract_category"] == "TERMINATED":
             combined_data["category_terminated"] = "X"
 
         # Calculate age in case we need it
@@ -501,6 +503,7 @@ def on_submit():
             combined_data["infoSheet_employer_address_1"], combined_data["infoSheet_employer_address_2"], combined_data["infoSheet_employer_address_3"] = split_long_string(combined_data["employer_address"], max_length)
     except Exception as e:
         print(f'Error: {e}')
+        traceback.print_exc()
 
     # id407
     try:
@@ -615,6 +618,8 @@ def on_submit():
         combined_data["helper_sign_id407_date"] = datetime.now().strftime('%Y-%m-%d')
     except Exception as e:
         print(f'Error: {e}')
+        traceback.print_exc()
+
 
 
     # Save the dictionary as a separate Python file with <CONTRACT_NUMBER>.py for future references
