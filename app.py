@@ -2,6 +2,9 @@ import sys
 import json
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QScrollArea, QLabel, QLineEdit, QRadioButton, QComboBox, QPushButton, QButtonGroup
 from PyQt5.QtGui import QFont
+from datetime import datetime
+from fill_PDF import *
+import math
 
 # Create the main window
 app = QApplication(sys.argv)
@@ -29,16 +32,16 @@ constant_dict = {
 }
 # Create dictionaries to store user input
 employer_pane_dict = {
-    # Misc.
+   # Misc.
     "category": "NEW",     # drop down set default category to NEW
-    "contract_number": "",      
-    "contract_date": ""    ,
+    "contract_number": "",
+    "contract_date": "",
     "owwa_recipt_number": "",
-    "wage": "4870",     # set default wage = 4807
+    "wage": "4870",     # set default wage = 4870
     "allowance": "1236",    # set default allowance = 1236
     "other_allowance": "",
     "paid_vacation_for_renew_contract": "N/A",     # set default to N/A
-    # Empolyer detials
+    # Employer details
     "employer_sur_name": "",
     "employer_first_name": "",
     "employer_middle_name": "",
@@ -66,12 +69,12 @@ employer_pane_dict = {
     "employer_adult": "",
     "employer_people_to_be_served": "",
     "employer_current_worker_number": "",
-    "employer_servant_room": "YES",    # set default servant room to YES
-    "employer_servant_room_size": "",
-    "employer_servant_room_shared_with": "",
-    "employer_servant_room_shared_with_remarks": "",
-    "employer_servant_room_shared_with_numbers": "",
-    "employer_servant_room_shared_with_people_age": "",
+    "employer_servant_own_room": "YES",    # set default servant room to YES
+    "employer_servant_own_room_size": "",
+    # "employer_servant_room_shared_with": "",
+    "employer_servant_share_room_with_how_many_children": "",
+    "employer_servant_share_room_with_children_age": "",
+    "employer_servant_room_other_with_remarks": "",
     "employer_provide_light_and_water_supply": "",
     "employer_provide_toilet_and_bathing_facilities": "",
     "employer_provide_bed": "",
@@ -114,24 +117,16 @@ helper_pane_dict = {
 # Employer pane with a vertical scroll
 employer_scroll_area = QScrollArea()
 employer_widget = QWidget()
+employer_widget.setStyleSheet("font-size: 20px;")
 employer_layout = QVBoxLayout()
 
 employer_scroll_area.setWidget(employer_widget)
 employer_scroll_area.setWidgetResizable(True)
 employer_widget.setLayout(employer_layout)
 
-# Init title font size
-title_font = QFont()
-title_font.setPointSize(16)
-
 # Helper function to match the dictionary key and change the value to user input
 def employer_input_changed(text, key):
     employer_pane_dict[key] = text
-
-# Employer Pane Title
-employer_title = QLabel("Employer")
-employer_title.setFont(title_font)
-employer_layout.addWidget(employer_title)
 
 # Go through all the key in employer dictionary and display 
 for key, value in employer_pane_dict.items():
@@ -208,15 +203,23 @@ for key, value in employer_pane_dict.items():
         text_input.textChanged.connect(lambda text, key=key: employer_input_changed(text, key))
         employer_layout.addWidget(label)
         employer_layout.addWidget(text_input)
-    elif key == "employer_servant_room":
+    elif key == "employer_servant_own_room":
         combo_box = QComboBox()
-        combo_box.addItems(["YES", "SHARE WITH CHILD/OTHER", "OTHER"])
+        combo_box.addItems(["YES", "NO, SHARE WITH CHILD/OTHER", "NO, OTHER"])
         combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(combo_box.itemText(selection), key))
         employer_layout.addWidget(label)
         employer_layout.addWidget(combo_box)
+    elif key == "employer_servant_own_room_size":
+        text_input = QLineEdit()
+        text_input.setPlaceholderText("(SQ FEET)")
+        text_input.textChanged.connect(lambda text, key=key: employer_input_changed(text, key))
+        employer_layout.addWidget(label)
+        employer_layout.addWidget(text_input)
     elif key == "employer_provide_light_and_water_supply":
         employer_provides_button_group_1 = QButtonGroup()
         radio_button_1 = QRadioButton("YES")
+        # Set the default radio button to "YES"
+        radio_button_1.setChecked(True)     
         radio_button_2 = QRadioButton("NO")
         employer_provides_button_group_1.addButton(radio_button_1)
         employer_provides_button_group_1.addButton(radio_button_2)
@@ -228,6 +231,8 @@ for key, value in employer_pane_dict.items():
     elif key == "employer_provide_toilet_and_bathing_facilities":
         employer_provides_button_group_2 = QButtonGroup()
         radio_button_1 = QRadioButton("YES")
+        # Set the default radio button to "YES"
+        radio_button_1.setChecked(True)    
         radio_button_2 = QRadioButton("NO")
         employer_provides_button_group_2.addButton(radio_button_1)
         employer_provides_button_group_2.addButton(radio_button_2)
@@ -239,6 +244,8 @@ for key, value in employer_pane_dict.items():
     elif key == "employer_provide_bed":
         employer_provides_button_group_3 = QButtonGroup()
         radio_button_1 = QRadioButton("YES")
+        # Set the default radio button to "YES"
+        radio_button_1.setChecked(True)    
         radio_button_2 = QRadioButton("NO")
         employer_provides_button_group_3.addButton(radio_button_1)
         employer_provides_button_group_3.addButton(radio_button_2)
@@ -250,6 +257,8 @@ for key, value in employer_pane_dict.items():
     elif key == "employer_provide_blankets_or_quilt":
         employer_provides_button_group_4 = QButtonGroup()
         radio_button_1 = QRadioButton("YES")
+        # Set the default radio button to "YES"
+        radio_button_1.setChecked(True)    
         radio_button_2 = QRadioButton("NO")
         employer_provides_button_group_4.addButton(radio_button_1)
         employer_provides_button_group_4.addButton(radio_button_2)
@@ -261,6 +270,8 @@ for key, value in employer_pane_dict.items():
     elif key == "employer_provide_pillows":
         employer_provides_button_group_5 = QButtonGroup()
         radio_button_1 = QRadioButton("YES")
+        # Set the default radio button to "YES"
+        radio_button_1.setChecked(True)    
         radio_button_2 = QRadioButton("NO")
         employer_provides_button_group_5.addButton(radio_button_1)
         employer_provides_button_group_5.addButton(radio_button_2)
@@ -272,6 +283,8 @@ for key, value in employer_pane_dict.items():
     elif key == "employer_provide_wardrobe":
         employer_provides_button_group_6 = QButtonGroup()
         radio_button_1 = QRadioButton("YES")
+        # Set the default radio button to "YES"
+        radio_button_1.setChecked(True)    
         radio_button_2 = QRadioButton("NO")
         employer_provides_button_group_6.addButton(radio_button_1)
         employer_provides_button_group_6.addButton(radio_button_2)
@@ -284,6 +297,8 @@ for key, value in employer_pane_dict.items():
         employer_provides_button_group_7 = QButtonGroup()
         radio_button_1 = QRadioButton("YES")
         radio_button_2 = QRadioButton("NO")
+        # Set the default radio button to "NO"
+        radio_button_2.setChecked(True)    
         employer_provides_button_group_7.addButton(radio_button_1)
         employer_provides_button_group_7.addButton(radio_button_2)
         radio_button_1.toggled.connect(lambda text, key=key: employer_input_changed("YES", key))
@@ -295,6 +310,8 @@ for key, value in employer_pane_dict.items():
         employer_provides_button_group_8 = QButtonGroup()
         radio_button_1 = QRadioButton("YES")
         radio_button_2 = QRadioButton("NO")
+        # Set the default radio button to "NO"
+        radio_button_2.setChecked(True)
         employer_provides_button_group_8.addButton(radio_button_1)
         employer_provides_button_group_8.addButton(radio_button_2)
         radio_button_1.toggled.connect(lambda text, key=key: employer_input_changed("YES", key))
@@ -313,6 +330,7 @@ main_layout.addWidget(employer_scroll_area)
 # Helper pane with a vertical scroll
 helper_scroll_area = QScrollArea()
 helper_widget = QWidget()
+helper_widget.setStyleSheet("font-size: 20px;")
 helper_layout = QVBoxLayout()
 
 helper_scroll_area.setWidget(helper_widget)
@@ -321,11 +339,6 @@ helper_widget.setLayout(helper_layout)
 
 def helper_input_changed(text, key):
     helper_pane_dict[key] = text
-
-# Helper Pane Title
-helper_title = QLabel("Helper")
-helper_title.setFont(title_font)
-helper_layout.addWidget(helper_title)
 
 for key, value in helper_pane_dict.items():
     formatted_key_string = " ".join(word.capitalize() for word in key.split('_'))
@@ -415,9 +428,204 @@ def on_submit():
     # Combine different dict data into one dictionary
     combined_data = {**constant_dict, **employer_pane_dict, **helper_pane_dict}
     
-    # Save the dictionary as a separate Python file
-    with open('user_input_data.py', 'w') as f:
-        f.write(f'user_input_data = {json.dumps(combined_data, indent=4)}')
+    # Create some new key for specific PDF
+    # OWWA
+    try:
+        combined_data["owwa_contract_date"] = datetime.now().strftime('%Y-%m-%d')
+        combined_data["employer_name"] = combined_data["employer_sur_name"] + " " + combined_data["employer_first_name"] + " " + combined_data["employer_middle_name"]
+        combined_data["employer_birthday_year"], combined_data["employer_birthday_month"], combined_data["employer_birthday_day"] = combined_data["employer_birthday"].split('-')
+        combined_data["helper_birthday_year"], combined_data["helper_birthday_month"], combined_data["helper_birthday_day"] = combined_data["helper_birthday"].split('-')
+        # Contact person address
+        helper_philippine_contact_person_address_max_length_per_row = 19
+        helper_philippine_contact_person_address_max_row = 3
+        # If the address is longer than 66 characters then evenly split the max_length per row so the font size are similar
+        if len(combined_data["helper_philippine_contact_person_address"]) > (helper_philippine_contact_person_address_max_length_per_row*helper_philippine_contact_person_address_max_row):
+            really_long_string_max_length_per_row = math.ceil(len(combined_data["helper_philippine_contact_person_address"]) / helper_philippine_contact_person_address_max_row)  # divide and round up
+            max_length = []
+            for i in range (helper_philippine_contact_person_address_max_row):
+                max_length.append(really_long_string_max_length_per_row) 
+            combined_data["helper_philippine_contact_person_address_1"], combined_data["helper_philippine_contact_person_address_2"], combined_data["helper_philippine_contact_person_address_3"] = split_long_string(combined_data["helper_philippine_contact_person_address"], max_length)
+        else:
+            max_length = []
+            for i in range (helper_philippine_contact_person_address_max_row):
+                max_length.append(helper_philippine_contact_person_address_max_length_per_row)
+            combined_data["helper_philippine_contact_person_address_1"], combined_data["helper_philippine_contact_person_address_2"], combined_data["helper_philippine_contact_person_address_3"] = split_long_string(combined_data["helper_philippine_contact_person_address"], max_length)
+    except Exception as e:
+        print(f'Error: {e}')
+    
+    # infoSheet
+    try:
+        # Contract category check box
+        if combined_data["category"] == "NEW":
+            combined_data["category_new"] = "X"
+        elif combined_data["category"] == "RECONTRACT":
+            combined_data["category_recontract"] = "X"
+        elif combined_data["category"] == "TRANSFER":
+            combined_data["category_transfer"] = "X"
+        elif combined_data["category"] == "FINISHED":
+            combined_data["category_finished"] = "X"
+        elif combined_data["category"] == "TERMINATED":
+            combined_data["category_terminated"] = "X"
+
+        # Calculate age in case we need it
+        combined_data["employer_age"] = calculate_birthday(combined_data["employer_birthday"])
+        combined_data["helper_age"] = calculate_birthday(combined_data["helper_birthday"])
+
+        # Helper gender check box
+        if combined_data["helper_gender"] == "MALE":
+            combined_data["helper_male"] = "X"
+        elif combined_data["helper_gender"] == "FEMALE":
+            combined_data["helper_female"] = "X"
+
+        # Helper civi status check box
+        if combined_data["helper_civil_status"] == "MARRIED":
+            combined_data["helper_married"] = "X"
+        else:
+            combined_data["helper_single"] = "X"
+        combined_data["infoSheet_helper_philippine_contact_person_and_relationship"] = combined_data["helper_philippine_contact_person"] + " / " + combined_data["helper_philippine_contact_person_relationship"]
+
+        # infoSheet contract address 
+        info_sheet_employer_address_max_length_per_row = 22
+        info_sheet_employer_address_max_row = 3
+        # If the address is longer than 66 characters then evenly split the max_length per row so the font size are similar
+        if len(combined_data["employer_address"]) > (info_sheet_employer_address_max_length_per_row*info_sheet_employer_address_max_row):
+            really_long_string_max_length_per_row = math.ceil(len(combined_data["employer_address"]) / info_sheet_employer_address_max_row)  # divide and round up
+            max_length = []
+            for i in range (info_sheet_employer_address_max_row):
+                max_length.append(really_long_string_max_length_per_row) 
+            combined_data["infoSheet_employer_address_1"], combined_data["infoSheet_employer_address_2"], combined_data["infoSheet_employer_address_3"] = split_long_string(combined_data["employer_address"], max_length)
+        else:
+            max_length = []
+            for i in range (info_sheet_employer_address_max_row):
+                max_length.append(info_sheet_employer_address_max_length_per_row)
+            combined_data["infoSheet_employer_address_1"], combined_data["infoSheet_employer_address_2"], combined_data["infoSheet_employer_address_3"] = split_long_string(combined_data["employer_address"], max_length)
+    except Exception as e:
+        print(f'Error: {e}')
+
+    # id407
+    try:
+        # Page 1
+        # combined_data["employer_name"] = combined_data["employer_sur_name"] + " " + combined_data["employer_first_name"] + " " + combined_data["employer_middle_name"]    # already exist above for OWWA
+        combined_data["helper_name"] = combined_data["helper_sur_name"] + " " + combined_data["helper_first_name"] + " " + combined_data["helper_middle_name"]
+        combined_data["id407_date"] = datetime.now().strftime('%Y-%m-%d')
+
+        # To ensure the helper address string fits in the 3 rows or 2 rows if address is too long
+        id407_helper_address_max_length_row_1 = 35
+        id407_helper_address_max_length_row_2 = 106
+        id407_helper_address_max_length_row_3 = 106
+        id407_helper_address_max_row = 2        # if string is too long, will just populate in the bottom two long line
+        if len(combined_data["helper_address"]) > (id407_helper_address_max_length_row_1 + id407_helper_address_max_length_row_2 + id407_helper_address_max_length_row_3):
+            really_long_string_max_length_per_row = math.ceil(len(combined_data["helper_address"]) / info_sheet_employer_address_max_row)  # divide and round up
+            max_length = []
+            for i in range (id407_helper_address_max_row):
+                max_length.append(really_long_string_max_length_per_row)
+            combined_data["id407_helper_address_1"] = ""
+            combined_data["id407_helper_address_2"], combined_data["id407_helper_address_3"] = split_long_string(combined_data["helper_address"], max_length)
+        else:
+            max_length = [id407_helper_address_max_length_row_1, id407_helper_address_max_length_row_2, id407_helper_address_max_length_row_3]
+            combined_data["id407_helper_address_1"], combined_data["id407_helper_address_2"], combined_data["id407_helper_address_3"] = split_long_string(combined_data["helper_address"], [id407_helper_address_max_length_row_1, id407_helper_address_max_length_row_2, id407_helper_address_max_length_row_3])
+
+        # To ensure the employer address string fits in the 2 rows or 1 row if address is too long
+        id407_employer_address_max_length_row_1 = 35
+        id407_employer_address_max_length_row_2 = 106
+        combined_data["id407_employer_address_1"], combined_data["id407_employer_address_2"] = split_long_string(combined_data["employer_address"], [id407_employer_address_max_length_row_1, id407_employer_address_max_length_row_2])
+
+        # Page 2
+        combined_data["employer_name_for_signature"] = combined_data["employer_name"]
+        combined_data["helper_name_for_signature"] = combined_data["helper_name"]
+
+        # Page 3
+        # Cross out FLAT/HOUSE on id407 when the residential type is HOUSE/FLAT
+        if combined_data["employer_residential_type"] == "FLAT":
+            combined_data["employer_residential_erase_house"] = "XXXXX"
+        elif combined_data["employer_residential_type"] == "HOUSE":
+            combined_data["employer_residential_erase_flat"] = "XXX"
+
+        # Helper get own room or not
+        if combined_data["employer_servant_own_room"] == "YES":
+            combined_data["employer_servant_own_room_yes"] = "X"
+        else:
+            combined_data["employer_servant_own_room_no"] = "X"
+            if combined_data["employer_servant_own_room"] == "NO, SHARE WITH CHILD/OTHER":
+                # combined_data["employer_servant_own_share_room"] = "X"
+                combined_data["employer_servant_share_room"] = "X"
+            elif combined_data["employer_servant_own_room"] == "NO, OTHER":
+                combined_data["employer_servant_room_other"] = "X"
+                # To ensure the other sleeping arrangment are captured evenly on the 2.5 rows
+                max_length = [32, 58, 58]
+                combined_data["employer_servant_room_other_with_remarks_1"], combined_data["employer_servant_room_other_with_remarks_2"], combined_data["employer_servant_room_other_with_remarks_3"] = split_long_string(combined_data["employer_servant_room_other_with_remarks"], max_length)
+
+
+        if combined_data["employer_provide_light_and_water_supply"] == "YES":
+            combined_data["employer_provide_light_and_water_supply_yes"] = "X"
+        else:
+            combined_data["employer_provide_light_and_water_supply_no"] = "X"
+
+        if combined_data["employer_provide_toilet_and_bathing_facilities"] == "YES":
+            combined_data["employer_provide_toilet_and_bathing_facilities_yes"] = "X"
+        else:
+            combined_data["employer_provide_toilet_and_bathing_facilities_no"] = "X"
+
+        if combined_data["employer_provide_bed"] == "YES":
+            combined_data["employer_provide_bed_yes"] = "X"
+        else:
+            combined_data["employer_provide_bed_no"] = "X"
+
+        if combined_data["employer_provide_blankets_or_quilt"] == "YES":
+            combined_data["employer_provide_blankets_or_quilt_yes"] = "X"
+        else:
+            combined_data["employer_provide_blankets_or_quilt_no"] = "X"
+
+        if combined_data["employer_provide_pillows"] == "YES":
+            combined_data["employer_provide_pillows_yes"] = "X"
+        else:
+            combined_data["employer_provide_pillows_no"] = "X"
+
+        if combined_data["employer_provide_wardrobe"] == "YES":
+            combined_data["employer_provide_wardrobe_yes"] = "X"
+        else:
+            combined_data["employer_provide_wardrobe_no"] = "X"
+
+        if combined_data["employer_provide_refrigerator"] == "YES":
+            combined_data["employer_provide_refrigerator_yes"] = "X"
+        else:
+            combined_data["employer_provide_refrigerator_no"] = "X"
+
+        if combined_data["employer_provide_desk"] == "YES":
+            combined_data["employer_provide_desk_yes"] = "X"
+        else:
+            combined_data["employer_provide_desk_no"] = "X"
+
+        # To ensure employer provide other facilites are evenly captured in 3 rows
+        if len(combined_data["employer_provide_other_facilities"]) > (3*41):
+            really_long_string_max_length_per_row = math.ceil(len(combined_data["employer_provide_other_facilities"]) / info_sheet_employer_address_max_row)  # divide and round up
+            max_length = []
+            for i in range (3):
+                max_length.append(really_long_string_max_length_per_row)
+            combined_data["employer_provide_other_facilities_1"], combined_data["employer_provide_other_facilities_2"], combined_data["employer_provide_other_facilities_3"] = split_long_string(combined_data["employer_provide_other_facilities"], max_length)
+        else:
+            max_length = [41, 41, 41]
+            combined_data["employer_provide_other_facilities_1"], combined_data["employer_provide_other_facilities_2"], combined_data["employer_provide_other_facilities_3"] = split_long_string(combined_data["employer_provide_other_facilities"], max_length)
+
+        # Page 4
+        # To ensure the other duties string fits in the 4 rows
+        max_length = [61, 61, 61, 61]
+        combined_data["employer_expect_other_duties_1"], combined_data["employer_expect_other_duties_2"], combined_data["employer_expect_other_duties_3"], combined_data["employer_expect_other_duties_4"] = split_long_string(combined_data["employer_expect_other_duties"],max_length)
+        combined_data["employer_sign_id407_date"] = datetime.now().strftime('%Y-%m-%d')
+        combined_data["helper_sign_id407_date"] = datetime.now().strftime('%Y-%m-%d')
+
+    except Exception as e:
+        print(f'Error: {e}')
+
+
+    # Save the dictionary as a separate Python file with <CONTRACT_NUMBER>.py for future references
+    with open(combined_data["employer_hkid"] + "_" + combined_data["contract_number"] + '_metadata.py', 'w') as f:
+        f.write(f'input_data = {json.dumps(combined_data, indent=4)}')
+    
+    # Create x3 PDF
+    fill_infoSheet(combined_data, employer_pane_dict["contract_number"], employer_pane_dict["employer_hkid"])
+    fill_owwa(combined_data, employer_pane_dict["contract_number"], employer_pane_dict["employer_hkid"])
+    fill_id407(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 
 submit_button.clicked.connect(on_submit)
 submit_layout.addWidget(submit_button)
