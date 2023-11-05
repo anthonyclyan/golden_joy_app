@@ -134,7 +134,7 @@ for key, value in employer_pane_dict.items():
     label = QLabel(formatted_key_string + ":")
     if key == "category":
         combo_box = QComboBox()
-        combo_box.addItems(["NEW", "RENEW", "TRANSFER", "FINISHED", "TERMINATED"])
+        combo_box.addItems(["NEW", "RECONTRACT", "TRANSFER", "FINISHED", "TERMINATED"])
         combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(combo_box.itemText(selection), key))
         employer_layout.addWidget(label)
         employer_layout.addWidget(combo_box)
@@ -613,7 +613,6 @@ def on_submit():
         combined_data["employer_expect_other_duties_1"], combined_data["employer_expect_other_duties_2"], combined_data["employer_expect_other_duties_3"], combined_data["employer_expect_other_duties_4"] = split_long_string(combined_data["employer_expect_other_duties"],max_length)
         combined_data["employer_sign_id407_date"] = datetime.now().strftime('%Y-%m-%d')
         combined_data["helper_sign_id407_date"] = datetime.now().strftime('%Y-%m-%d')
-
     except Exception as e:
         print(f'Error: {e}')
 
