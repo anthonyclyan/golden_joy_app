@@ -46,7 +46,7 @@ employer_pane_dict = {
     "employer_first_name": "",
     "employer_middle_name": "",
     "employer_birthday": "",
-    "employer_age": "",
+    # "employer_age": "",
     "employer_gender": "",
     "employer_nationality": "CHINESE",  # set default nationality to CHINESE
     "employer_hkid": "",
@@ -92,7 +92,7 @@ helper_pane_dict = {
     "helper_middle_name": "",
     "helper_birthday": "",
     "helper_place_of_birth": "",
-    "helper_age": "",
+    # "helper_age": "",
     "helper_gender": "",
     "helper_civil_status": "SINGLE",    # set default civil status to SINGLE
     "helper_hkid": "",
