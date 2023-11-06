@@ -68,7 +68,7 @@ employer_pane_dict = {
     "employer_child_0_to_5": "",
     "employer_child_5_to_18": "",
     "employer_adult": "",
-    "employer_people_to_be_served": "",
+    # "employer_people_to_be_served": "",
     "employer_current_worker_number": "",
     "employer_servant_own_room": "YES",    # set default servant room to YES
     "employer_servant_own_room_size": "",
@@ -620,7 +620,22 @@ def on_submit():
         print(f'Error: {e}')
         traceback.print_exc()
 
-
+    # acknowledgement and confirmation form
+    try:
+        # acknowledgement and confirmation form
+        combined_data["employer_name_page1"] = combined_data["employer_name"]
+        combined_data["employer_name_page2"] = combined_data["employer_name"]
+        combined_data["helper_name_page1"] = combined_data["helper_name"]
+        combined_data["helper_name_page2"] = combined_data["helper_name"]
+        combined_data["contract_number_page1_1"] = combined_data["contract_number"]
+        combined_data["contract_number_page1_2"] = combined_data["contract_number"]
+        combined_data["contract_number_page1_3"] = combined_data["contract_number"]
+        combined_data["contract_number_page2_1"] = combined_data["contract_number"]
+        combined_data["contract_number_page2_2"] = combined_data["contract_number"]
+        combined_data["contract_number_page2_3"] = combined_data["contract_number"]
+    except Exception as e:
+        print(f'Error: {e}')
+        traceback.print_exc()
 
     # Save the dictionary as a separate Python file with <CONTRACT_NUMBER>.py for future references
     with open(combined_data["employer_hkid"] + "_" + combined_data["contract_number"] + '_metadata.py', 'w') as f:

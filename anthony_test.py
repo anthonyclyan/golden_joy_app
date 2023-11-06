@@ -71,6 +71,23 @@ def fill_id407(dict_data, contract_number, employer_hkid):
     except Exception as e:
         print(f'Error: {e}')
 
+def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_hkid):
+    try:
+        reader = PdfReader('blank_PDF/blank_golden_joy_acknowledgement_confirmation.pdf')
+        writer = PdfWriter()
+
+        writer.append(reader)
+
+        for i in range(len(reader.pages)):
+            writer.update_page_form_field_values(writer.pages[i], dict_data)
+        
+        with open(employer_hkid + "_" + contract_number + "_acknowledgement_confirmation.pdf", "wb") as output_stream:
+            writer.write(output_stream)
+
+        print("acknowledgement and confirmation done")
+    except Exception as e:
+        print(f'Error: {e}')
+
 def split_long_string(input_string, max_lengths):
     # Split the input string into words
     words = input_string.split()
@@ -125,7 +142,7 @@ combined_data = {
     # "category": "TRANSFER",     # drop down set default category to NEW
     # "category": "FINISHED",     # drop down set default category to NEW
     "category": "TERMINATED",     # drop down set default category to NEW
-    "contract_number": "",
+    "contract_number": "P282923",
     "contract_date": "",
     "owwa_recipt_number": "",
     "wage": "4870",     # set default wage = 4870
@@ -394,7 +411,35 @@ combined_data["employer_sign_id407_date"] = datetime.now().strftime('%Y-%m-%d')
 combined_data["helper_sign_id407_date"] = datetime.now().strftime('%Y-%m-%d')
 
 
+# acknowledgement and confirmation form
+combined_data["employer_name_page1"] = combined_data["employer_name"]
+combined_data["employer_name_page2"] = combined_data["employer_name"]
+combined_data["helper_name_page1"] = combined_data["helper_name"]
+combined_data["helper_name_page2"] = combined_data["helper_name"]
+combined_data["contract_number_page1_1"] = combined_data["contract_number"]
+combined_data["contract_number_page1_2"] = combined_data["contract_number"]
+combined_data["contract_number_page1_3"] = combined_data["contract_number"]
+combined_data["contract_number_page2_1"] = combined_data["contract_number"]
+combined_data["contract_number_page2_2"] = combined_data["contract_number"]
+combined_data["contract_number_page2_3"] = combined_data["contract_number"]
+
 # Call functions to write to PDF
 fill_owwa(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 fill_infoSheet(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 fill_id407(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
+fill_acknowledgement_confirmation_form(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
+
+
+'''
+INFOSHEET 
+    CONTRACT ADDRESS TOO LONG DOES NOT FIT
+
+
+id407
+    placement still bad
+    2 years boy too small
+
+
+create desktop icon app and run a sh base file
+x2 new PDF
+'''

@@ -53,6 +53,25 @@ def fill_id407(dict_data, contract_number, employer_hkid):
     except Exception as e:
         print(f'Error: {e}')
 
+
+def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_hkid):
+    try:
+        reader = PdfReader('blank_PDF/blank_golden_joy_acknowledgement_confirmation.pdf')
+        writer = PdfWriter()
+
+        writer.append(reader)
+
+        for i in range(len(reader.pages)):
+            writer.update_page_form_field_values(writer.pages[i], dict_data)
+        
+        with open(employer_hkid + "_" + contract_number + "_acknowledgement_confirmation.pdf", "wb") as output_stream:
+            writer.write(output_stream)
+
+        print("acknowledgement and confirmation done")
+    except Exception as e:
+        print(f'Error: {e}')
+
+
 def split_long_string(input_string, max_lengths):
     # Split the input string into words
     words = input_string.split()
