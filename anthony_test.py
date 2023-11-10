@@ -128,63 +128,147 @@ def calculate_birthday (birthdate):
     else:
         return ""
 
+# combined_data = {
+#     "hk_agency_name": "JOJO GOOD WELL EMPLOYMENT AGENCY LIMITED",
+#     "hk_agency_phone_number": "64656060",
+#     "philippine_agency_name": "PLACEWELL INTERNATINOAL SERVICE CORPORATION",
+#     "philippine_agency_phone_number": "63285264838",
+#     "philippine_agency_code": "MWOHK-2023-170",
+#     "witness1_name": "CHOW SUK FUN",
+#     "witness2_name": "KATHERINE CHOW",
+#     # Misc.
+#     # "category": "NEW",     # drop down set default category to NEW
+#     # "category": "RECONTRACT",     # drop down set default category to NEW
+#     # "category": "TRANSFER",     # drop down set default category to NEW
+#     # "category": "FINISHED",     # drop down set default category to NEW
+#     "category": "TERMINATED",     # drop down set default category to NEW
+#     "contract_number": "P282923",
+#     "contract_date": "",
+#     "owwa_recipt_number": "",
+#     "wage": "4870",     # set default wage = 4870
+#     "allowance": "1236",    # set default allowance = 1236
+#     "other_allowance": "",
+#     "paid_vacation_for_renew_contract": "N/A",     # set default to N/A
+#     # Employer details
+#     "employer_sur_name": "PING",
+#     "employer_first_name": "FONG",
+#     "employer_middle_name": "",
+#     "employer_birthday": "1968-10-10",
+#     # "employer_age": "",
+#     "employer_gender": "",
+#     "employer_nationality": "CHINESE",  # set default nationality to CHINESE
+#     "employer_hkid": "Y142159(8)",
+#     "employer_passport_number": "",
+#     "employer_civil_status": "SINGLE",  # set default civil status to SINGLE
+#     "employer_email": "",
+#     "employer_hk_phone_number": "",
+#     "employer_spouse_sur_name": "",
+#     "employer_spouse_first_name": "",
+#     "employer_spouse_middle_name": "",
+#     "employer_spouse_hkid": "",
+#     "employer_spouse_passport_number": "",
+#     "employer_address": "FLAT D 3/F BLK 5 CSD ADDITIONAL DEPT QTRS 8 RAZOR HILL RAZOR HILL NEW TERRITORIES",
+#     "employer_residential_type": "HOUSE",    # set default residential type to FLAT
+#     # "employer_residential_type": "FLAT",    # set default residential type to FLAT
+#     "employer_residential_size": "650",
+#     "employer_house_type_remarks": "",
+#     "employer_expected_baby": "",
+#     "employer_child_0_to_5": "1",
+#     "employer_child_5_to_18": "",
+#     "employer_adult": "2",
+#     "employer_people_to_be_served": "",
+#     "employer_current_worker_number": "0",
+#     # "employer_servant_own_room": "YES",    # set default servant room to YES
+#     "employer_servant_own_room": "NO, OTHER",    # set default servant room to YES
+#     # "employer_servant_own_room": "NO, SHARE WITH CHILD/OTHER",    # set default servant room to YES
+#     "employer_servant_own_room_size": "",
+#     # "employer_servant_room_shared_with": "",
+#     "employer_servant_share_room_with_how_many_children": "1",
+#     "employer_servant_share_room_with_children_age": "1 YEAR BOY",
+#     "employer_servant_room_other_with_remarks": "",
+#     "employer_provide_light_and_water_supply": "YES",
+#     "employer_provide_toilet_and_bathing_facilities": "YES",
+#     "employer_provide_bed": "YES",
+#     "employer_provide_blankets_or_quilt": "YES",
+#     "employer_provide_pillows": "YES",
+#     "employer_provide_wardrobe": "YES",
+#     "employer_provide_refrigerator": "YES",
+#     "employer_provide_desk": "YES",
+#     "employer_provide_other_facilities": "",
+#     "employer_expect_other_duties": "",
+#     # Helper
+#     "helper_sur_name": "PUGAO",
+#     "helper_first_name": "ANA BELLY",
+#     "helper_middle_name": "PIRAL",
+#     "helper_birthday": "1981-07-18",
+#     "helper_place_of_birth": "",
+#     # "helper_age": "",
+#     "helper_gender": "FEMALE",
+#     "helper_civil_status": "MARRIED",    # set default civil status to SINGLE
+#     "helper_hkid": "WX517066(2)",
+#     "helper_passport_number": "P9074638A",
+#     "helper_passport_issue_place": "",
+#     "helper_passport_issue_date": "",
+#     "helper_passport_expire_date": "2028-10-08",
+#     "helper_visa_expire_date": "2023-12-30",
+#     "helper_id522_appointment_date": "",
+#     "helper_hk_phone_number": "93325575",
+#     "helper_philippine_phone_number": "09504909612",
+#     "helper_address": "BARANGAY POBLACTION MOLO ILOILO CITY PHILIPPINES 5000",
+#     "helper_previous_contract_number": "",
+#     "helper_previous_contract_finish_date": "",
+#     "helper_philippine_contact_person": "TESSIE P. MAHINAY",
+#     "helper_philippine_contact_person_relationship": "AUNTIE",
+#     "helper_philippine_contact_person_phone_number": "09982404767",
+#     "helper_philippine_contact_person_birthday": "1979-09-02",
+#     "helper_philippine_contact_person_address": "VILLA CRISTINA SUBDIVISION BLOCK 26 LOT 17 BRGY. CAGBANG OTON ILOILO CITY PHILIPPINES 5020"
+# }
+
 combined_data = {
     "hk_agency_name": "JOJO GOOD WELL EMPLOYMENT AGENCY LIMITED",
     "hk_agency_phone_number": "64656060",
     "philippine_agency_name": "PLACEWELL INTERNATINOAL SERVICE CORPORATION",
     "philippine_agency_phone_number": "63285264838",
     "philippine_agency_code": "MWOHK-2023-170",
-    "witness1_name": "CHOW SUK FUN",
+    "witness1_name": "CHOW SUK FAN",
     "witness2_name": "KATHERINE CHOW",
-    # Misc.
-    # "category": "NEW",     # drop down set default category to NEW
-    # "category": "RECONTRACT",     # drop down set default category to NEW
-    # "category": "TRANSFER",     # drop down set default category to NEW
-    # "category": "FINISHED",     # drop down set default category to NEW
-    "category": "TERMINATED",     # drop down set default category to NEW
-    "contract_number": "P282923",
-    "contract_date": "",
+    "contract_category": "RECONTRACT",
+    "contract_number": "P668197",
+    "contract_date": "2023-11-10",
     "owwa_recipt_number": "",
-    "wage": "4870",     # set default wage = 4870
-    "allowance": "1236",    # set default allowance = 1236
+    "wage": "4870",
+    "allowance": "1236",
     "other_allowance": "",
-    "paid_vacation_for_renew_contract": "N/A",     # set default to N/A
-    # Employer details
-    "employer_sur_name": "PING",
-    "employer_first_name": "FONG",
-    "employer_middle_name": "",
-    "employer_birthday": "1968-10-10",
-    # "employer_age": "",
-    "employer_gender": "",
-    "employer_nationality": "CHINESE",  # set default nationality to CHINESE
-    "employer_hkid": "Y142159(8)",
+    "paid_vacation_for_renew_contract": "N/A",
+    "employer_sur_name": "CHU",
+    "employer_first_name": "LEE",
+    "employer_middle_name": "WA",
+    "employer_birthday": "1988-01-20",
+    "employer_gender": "FEMALE",
+    "employer_nationality": "CHINESE",
+    "employer_hkid": "V079605(0)",
     "employer_passport_number": "",
-    "employer_civil_status": "SINGLE",  # set default civil status to SINGLE
+    "employer_civil_status": "MARRIED",
     "employer_email": "",
-    "employer_hk_phone_number": "",
-    "employer_spouse_sur_name": "",
-    "employer_spouse_first_name": "",
-    "employer_spouse_middle_name": "",
-    "employer_spouse_hkid": "",
+    "employer_hk_phone_number": "61060895",
+    "employer_spouse_sur_name": "CHONG",
+    "employer_spouse_first_name": "MING",
+    "employer_spouse_middle_name": "CHEUNG",
+    "employer_spouse_hkid": "Z320185(7)",
     "employer_spouse_passport_number": "",
-    "employer_address": "FLAT D 3/F BLK 5 CSD ADDITIONAL DEPT QTRS 8 RAZOR HILL RAZOR HILL NEW TERRITORIES",
-    "employer_residential_type": "HOUSE",    # set default residential type to FLAT
-    # "employer_residential_type": "FLAT",    # set default residential type to FLAT
-    "employer_residential_size": "650",
+    "employer_address": "FLAT B G/F TOWER 1 THE HORIZON COURT D 18 FOCHUN ROAD TAI PO NEW TERRITORIES",
+    "employer_residential_type": "FLAT",
+    "employer_residential_size": "1479",
     "employer_house_type_remarks": "",
     "employer_expected_baby": "",
-    "employer_child_0_to_5": "1",
+    "employer_child_0_to_5": "3",
     "employer_child_5_to_18": "",
     "employer_adult": "2",
-    "employer_people_to_be_served": "",
-    "employer_current_worker_number": "0",
-    # "employer_servant_own_room": "YES",    # set default servant room to YES
-    "employer_servant_own_room": "NO, OTHER",    # set default servant room to YES
-    # "employer_servant_own_room": "NO, SHARE WITH CHILD/OTHER",    # set default servant room to YES
+    "employer_current_worker_number": "2",
+    "employer_servant_own_room": "YES",
     "employer_servant_own_room_size": "",
-    # "employer_servant_room_shared_with": "",
     "employer_servant_share_room_with_how_many_children": "1",
-    "employer_servant_share_room_with_children_age": "1 YEAR BOY",
+    "employer_servant_share_room_with_children_age": "4 YRS OLD GIRL",
     "employer_servant_room_other_with_remarks": "",
     "employer_provide_light_and_water_supply": "YES",
     "employer_provide_toilet_and_bathing_facilities": "YES",
@@ -192,36 +276,92 @@ combined_data = {
     "employer_provide_blankets_or_quilt": "YES",
     "employer_provide_pillows": "YES",
     "employer_provide_wardrobe": "YES",
-    "employer_provide_refrigerator": "YES",
-    "employer_provide_desk": "YES",
+    "employer_provide_refrigerator": "NO",
+    "employer_provide_desk": "NO",
     "employer_provide_other_facilities": "",
     "employer_expect_other_duties": "",
-    # Helper
-    "helper_sur_name": "PUGAO",
-    "helper_first_name": "ANA BELLY",
-    "helper_middle_name": "PIRAL",
-    "helper_birthday": "1981-07-18",
-    "helper_place_of_birth": "",
-    # "helper_age": "",
+    "helper_sur_name": "NALUZ",
+    "helper_first_name": "KAREEN",
+    "helper_middle_name": "ALBA",
+    "helper_birthday": "1980-03-09",
+    "helper_place_of_birth": "MASBATE MASBATE",
     "helper_gender": "FEMALE",
-    "helper_civil_status": "MARRIED",    # set default civil status to SINGLE
-    "helper_hkid": "WX517066(2)",
-    "helper_passport_number": "P9074638A",
-    "helper_passport_issue_place": "",
-    "helper_passport_issue_date": "",
-    "helper_passport_expire_date": "2028-10-08",
-    "helper_visa_expire_date": "2023-12-30",
+    "helper_civil_status": "MARRIED",
+    "helper_hkid": "W845757(6)",
+    "helper_passport_number": "P2816237B",
+    "helper_passport_issue_place": "DFA DUMAGUETE",
+    "helper_passport_issue_date": "2019-08-19",
+    "helper_passport_expire_date": "2029-08-18",
+    "helper_visa_expire_date": "2024-01-09",
     "helper_id522_appointment_date": "",
-    "helper_hk_phone_number": "93325575",
-    "helper_philippine_phone_number": "09504909612",
-    "helper_address": "BARANGAY POBLACTION MOLO ILOILO CITY PHILIPPINES 5000",
-    "helper_previous_contract_number": "",
-    "helper_previous_contract_finish_date": "",
-    "helper_philippine_contact_person": "TESSIE P. MAHINAY",
-    "helper_philippine_contact_person_relationship": "AUNTIE",
-    "helper_philippine_contact_person_phone_number": "09982404767",
-    "helper_philippine_contact_person_birthday": "1979-09-02",
-    "helper_philippine_contact_person_address": "VILLA CRISTINA SUBDIVISION BLOCK 26 LOT 17 BRGY. CAGBANG OTON ILOILO CITY PHILIPPINES 5020"
+    "helper_hk_phone_number": "90356082",
+    "helper_philippine_phone_number": "9338609875",
+    "helper_address": "BARANGAY GABANGAH AN MUNICIPALITY SIATON PROVINCE NEGROS ORIENTAL PHILIPPINES",
+    "helper_previous_contract_number": "N917643",
+    "helper_previous_contract_finish_date": "2024-01-09",
+    "helper_philippine_contact_person": "ANA ALBA TO",
+    "helper_philippine_contact_person_relationship": "SISTER",
+    "helper_philippine_contact_person_phone_number": "9338609875",
+    "helper_philippine_contact_person_birthday": "1964-10-18",
+    "helper_philippine_contact_person_address": "472 JABONEROS ST SAN NICOLAS BINONDO MANILA PHILIPPINES",
+    "owwa_contract_date": "2023-11-11",
+    "employer_name": "CHU LEE WA",
+    "employer_birthday_year": "1988",
+    "employer_birthday_month": "01",
+    "employer_birthday_day": "20",
+    "helper_birthday_year": "1980",
+    "helper_birthday_month": "03",
+    "helper_birthday_day": "09",
+    "helper_philippine_contact_person_address_1": "472 JABONEROS ST",
+    "helper_philippine_contact_person_address_2": "SAN NICOLAS BINONDO",
+    "helper_philippine_contact_person_address_3": "MANILA PHILIPPINES",
+    "category_recontract": "X",
+    "employer_age": 35,
+    "helper_age": 43,
+    "helper_female": "X",
+    "helper_married": "X",
+    "infoSheet_helper_philippine_contact_person_and_relationship": "ANA ALBA TO / SISTER",
+    "infoSheet_employer_address_1": "FLAT B G/F TOWER 1 THE",
+    "infoSheet_employer_address_2": "HORIZON COURT D 18 FOCHUN",
+    "infoSheet_employer_address_3": "ROAD TAI PO NEW",
+    "helper_name": "NALUZ KAREEN ALBA",
+    "id407_date": "2023-11-11",
+    "id407_helper_address_1": "BARANGAY GABANGAH AN MUNICIPALITY",
+    "id407_helper_address_2": "SIATON PROVINCE NEGROS ORIENTAL PHILIPPINES",
+    "id407_helper_address_3": "",
+    "id407_employer_address_1": "FLAT B G/F TOWER 1 THE HORIZON",
+    "id407_employer_address_2": "COURT D 18 FOCHUN ROAD TAI PO NEW TERRITORIES",
+    "employer_name_for_signature": "CHU LEE WA",
+    "helper_name_for_signature": "NALUZ KAREEN ALBA",
+    "employer_residential_erase_house": "XXXXX",
+    "employer_servant_own_room_yes": "X",
+    "employer_provide_light_and_water_supply_yes": "X",
+    "employer_provide_toilet_and_bathing_facilities_yes": "X",
+    "employer_provide_bed_yes": "X",
+    "employer_provide_blankets_or_quilt_yes": "X",
+    "employer_provide_pillows_yes": "X",
+    "employer_provide_wardrobe_yes": "X",
+    "employer_provide_refrigerator_no": "X",
+    "employer_provide_desk_no": "X",
+    "employer_provide_other_facilities_1": "",
+    "employer_provide_other_facilities_2": "",
+    "employer_provide_other_facilities_3": "",
+    "employer_expect_other_duties_1": "",
+    "employer_expect_other_duties_2": "",
+    "employer_expect_other_duties_3": "",
+    "employer_expect_other_duties_4": "",
+    "employer_sign_id407_date": "2023-11-11",
+    "helper_sign_id407_date": "2023-11-11",
+    "employer_name_page1": "CHU LEE WA",
+    "employer_name_page2": "CHU LEE WA",
+    "helper_name_page1": "NALUZ KAREEN ALBA",
+    "helper_name_page2": "NALUZ KAREEN ALBA",
+    "contract_number_page1_1": "P668197",
+    "contract_number_page1_2": "P668197",
+    "contract_number_page1_3": "P668197",
+    "contract_number_page2_1": "P668197",
+    "contract_number_page2_2": "P668197",
+    "contract_number_page2_3": "P668197"
 }
 
 # OWWA
@@ -247,15 +387,15 @@ else:
 
 
 # infoSheet
-if combined_data["category"] == "NEW":
+if combined_data["contract_category"] == "NEW":
     combined_data["category_new"] = "X"
-elif combined_data["category"] == "RECONTRACT":
+elif combined_data["contract_category"] == "RECONTRACT":
     combined_data["category_recontract"] = "X"
-elif combined_data["category"] == "TRANSFER":
+elif combined_data["contract_category"] == "TRANSFER":
     combined_data["category_transfer"] = "X"
-elif combined_data["category"] == "FINISHED":
+elif combined_data["contract_category"] == "FINISHED":
     combined_data["category_finished"] = "X"
-elif combined_data["category"] == "TERMINATED":
+elif combined_data["contract_category"] == "TERMINATED":
     combined_data["category_terminated"] = "X"
 
 # Calculate age in case we need it
