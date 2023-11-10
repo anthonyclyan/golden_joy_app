@@ -28,7 +28,7 @@ constant_dict = {
     "philippine_agency_name": "PLACEWELL INTERNATINOAL SERVICE CORPORATION",
     "philippine_agency_phone_number": "63285264838",
     "philippine_agency_code": "MWOHK-2023-170",
-    "witness1_name": "CHOW SUK FUN",
+    "witness1_name": "CHOW SUK FAN",
     "witness2_name": "KATHERINE CHOW"
 }
 # Create dictionaries to store user input
@@ -637,6 +637,7 @@ def on_submit():
         print(f'Error: {e}')
         traceback.print_exc()
 
+
     # Save the dictionary as a separate Python file with <CONTRACT_NUMBER>.py for future references
     with open(combined_data["employer_hkid"] + "_" + combined_data["contract_number"] + '_metadata.py', 'w') as f:
         f.write(f'input_data = {json.dumps(combined_data, indent=4)}')
@@ -645,6 +646,7 @@ def on_submit():
     fill_infoSheet(combined_data, employer_pane_dict["contract_number"], employer_pane_dict["employer_hkid"])
     fill_owwa(combined_data, employer_pane_dict["contract_number"], employer_pane_dict["employer_hkid"])
     fill_id407(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
+    fill_acknowledgement_confirmation_form(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 
 submit_button.clicked.connect(on_submit)
 submit_layout.addWidget(submit_button)
