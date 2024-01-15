@@ -155,6 +155,31 @@ def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_
     except Exception as e:
         print(f'Error: {e}')
 
+def fill_service_agreement(dict_data, contract_number, employer_hkid):
+    try:
+        # Make a copy of original file then append the copied PDF
+        blank_golden_joy_service_agreement_source_path = 'blank_PDF/blank_golden_joy_service_agreement.pdf'
+        blank_golden_joy_service_agreement_to_fill_path = 'blank_PDF/blank_golden_joy_service_agreement_to_fill.pdf'
+        copy_and_paste_file(blank_golden_joy_service_agreement_source_path, blank_golden_joy_service_agreement_to_fill_path)
+
+        reader = PdfReader(blank_golden_joy_service_agreement_to_fill_path)
+        writer = PdfWriter()
+
+        writer.append(reader)
+
+        for i in range(len(reader.pages)):
+            writer.update_page_form_field_values(writer.pages[i], dict_data)
+        
+        with open(employer_hkid + "_" + contract_number + "_service_agreement.pdf", "wb") as output_stream:
+            writer.write(output_stream)
+
+        # Remove the copied PDF that undergone above steps
+        os.remove(blank_golden_joy_service_agreement_to_fill_path)
+
+        print("service agreement done")
+    except Exception as e:
+        print(f'Error: {e}')
+
 
 def split_long_string(input_string, max_lengths):
     # Split the input string into words
@@ -336,6 +361,7 @@ combined_data = {
     "contract_number_page2_2": "P856456",
     "contract_number_page2_3": "P856456"
 }
+
 # OWWA
 combined_data["owwa_contract_date"] = datetime.now().strftime('%Y-%m-%d')
 combined_data["employer_name"] = combined_data["employer_sur_name"] + " " + combined_data["employer_first_name"] + " " + combined_data["employer_middle_name"]
@@ -535,12 +561,17 @@ combined_data["contract_number_page2_1"] = combined_data["contract_number"]
 combined_data["contract_number_page2_2"] = combined_data["contract_number"]
 combined_data["contract_number_page2_3"] = combined_data["contract_number"]
 
+# Service Agreement
+combined_data["service_agreement_contract_date"] = datetime.now().strftime('%Y-%m-%d')
+combined_data["helper_name_consent"] = combined_data["helper_sur_name"] + " " + combined_data["helper_first_name"] + " " + combined_data["helper_middle_name"]
+combined_data["service_agreement_hk_agency_signature_date"] = datetime.now().strftime('%Y-%m-%d')
 
 # Call functions to write to PDF
 fill_owwa(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 fill_infoSheet(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 fill_id407(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 fill_acknowledgement_confirmation_form(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
+fill_service_agreement(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 
 '''
 DONE:

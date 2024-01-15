@@ -128,6 +128,31 @@ def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_
     except Exception as e:
         print(f'Error: {e}')
 
+def fill_service_agreement(dict_data, contract_number, employer_hkid):
+    try:
+        # Make a copy of original file then append the copied PDF
+        blank_golden_joy_service_agreement_source_path = 'blank_PDF/blank_golden_joy_service_agreement.pdf'
+        blank_golden_joy_service_agreement_to_fill_path = 'blank_PDF/blank_golden_joy_service_agreement_to_fill.pdf'
+        copy_and_paste_file(blank_golden_joy_service_agreement_source_path, blank_golden_joy_service_agreement_to_fill_path)
+
+        reader = PdfReader(blank_golden_joy_service_agreement_to_fill_path)
+        writer = PdfWriter()
+
+        writer.append(reader)
+
+        for i in range(len(reader.pages)):
+            writer.update_page_form_field_values(writer.pages[i], dict_data)
+        
+        with open(employer_hkid + "_" + contract_number + "_service_agreement.pdf", "wb") as output_stream:
+            writer.write(output_stream)
+
+        # Remove the copied PDF that undergone above steps
+        os.remove(blank_golden_joy_service_agreement_to_fill_path)
+
+        print("service agreement done")
+    except Exception as e:
+        print(f'Error: {e}')
+
 def split_long_string(input_string, max_lengths):
     # Split the input string into words
     words = input_string.split()

@@ -622,7 +622,6 @@ def on_submit():
 
     # acknowledgement and confirmation form
     try:
-        # acknowledgement and confirmation form
         combined_data["employer_name_page1"] = combined_data["employer_name"]
         combined_data["employer_name_page2"] = combined_data["employer_name"]
         combined_data["helper_name_page1"] = combined_data["helper_name"]
@@ -633,6 +632,16 @@ def on_submit():
         combined_data["contract_number_page2_1"] = combined_data["contract_number"]
         combined_data["contract_number_page2_2"] = combined_data["contract_number"]
         combined_data["contract_number_page2_3"] = combined_data["contract_number"]
+    except Exception as e:
+        print(f'Error: {e}')
+        traceback.print_exc()
+    
+    # service agreement
+    try:
+        # Service Agreement
+        combined_data["service_agreement_contract_date"] = datetime.now().strftime('%Y-%m-%d')
+        combined_data["helper_name_consent"] = combined_data["helper_sur_name"] + " " + combined_data["helper_first_name"] + " " + combined_data["helper_middle_name"]
+        combined_data["service_agreement_hk_agency_signature_date"] = datetime.now().strftime('%Y-%m-%d')
     except Exception as e:
         print(f'Error: {e}')
         traceback.print_exc()
@@ -647,6 +656,8 @@ def on_submit():
     fill_owwa(combined_data, employer_pane_dict["contract_number"], employer_pane_dict["employer_hkid"])
     fill_id407(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
     fill_acknowledgement_confirmation_form(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
+    fill_service_agreement(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
+
 
 submit_button.clicked.connect(on_submit)
 submit_layout.addWidget(submit_button)
