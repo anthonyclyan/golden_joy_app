@@ -155,6 +155,7 @@ def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_
     except Exception as e:
         print(f'Error: {e}')
 
+
 def split_long_string(input_string, max_lengths):
     # Split the input string into words
     words = input_string.split()
@@ -275,7 +276,7 @@ combined_data = {
     "helper_philippine_contact_person_relationship": "BROTHER",
     "helper_philippine_contact_person_phone_number": "9190658782",
     "helper_philippine_contact_person_birthday": "",
-    "helper_philippine_contact_person_address": "",
+    "helper_philippine_contact_person_address": "ZONE 1 PUROK 15 VERY VERY VERY VERY VERY VERY VERY VERY VERY POBLACION COMPOSTELA DAVAO DE ORO POST CODE 8803 PHILIPPINES",
     "owwa_contract_date": "2023-12-06",
     "employer_name": "MAN SIN NING",
     "employer_birthday_year": "1987",
@@ -534,18 +535,21 @@ combined_data["contract_number_page2_1"] = combined_data["contract_number"]
 combined_data["contract_number_page2_2"] = combined_data["contract_number"]
 combined_data["contract_number_page2_3"] = combined_data["contract_number"]
 
+
 # Call functions to write to PDF
 fill_owwa(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 fill_infoSheet(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 fill_id407(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 fill_acknowledgement_confirmation_form(combined_data, combined_data["contract_number"], combined_data["employer_hkid"])
 
-
 '''
 DONE:
 - INFOSHEET 
     - CONTRACT ADDRESS TOO LONG DOES NOT FIT
-
+- id988a
+    - CANNOT DO, HK GOV LOCKED PDF WITH PASSWORD
+- id988b
+    - CANNOT DO, HK GOV LOCKED PDF WITH PASSWORD
 
 id407
     placement still bad
@@ -554,8 +558,7 @@ id407
 owwa
     use new form
 
-id988a
-id988b
+
 
 
 create desktop icon app and run a sh base file
