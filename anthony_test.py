@@ -1,11 +1,42 @@
 from pypdf import PdfReader, PdfWriter
 from datetime import datetime
 import math
+import os
+
+def copy_and_paste_file(source_path, destination_path):
+    bash_script_content = f'''
+#!/bin/bash
+
+# Declare variable in bash script
+source_path="{source_path}"
+destination_path="{destination_path}"
+
+# Use variable in bash script
+cp -R $source_path $destination_path
+'''
+    # Write the bash script content to a file
+    bash_script_path = 'generate_script.sh'
+    with open(bash_script_path, 'w') as bash_script_file: bash_script_file.write(bash_script_content)
+
+    # Make the Bash script executable
+    os.system(f'chmod +x {bash_script_path}')
+
+    # Run the Bash script
+    os.system(f'./{bash_script_path}')
+
+    # Optionally, you can remove the generated Bash script after execution
+    os.remove(bash_script_path)
+
+
 
 def fill_infoSheet (dict_data, contract_number, employer_hkid):
     try:
-        reader = PdfReader('blank_PDF/blank_infoSheet.pdf')
-        # reader = PdfReader('blank_PDF/blank_infoSheet_flat_with_fields.pdf')
+        # Make a copy of original file then append the copied PDF
+        blank_infoSheet_source_path = 'blank_PDF/blank_infoSheet.pdf'
+        blank_infoSheet_to_fill_path = 'blank_PDF/blank_infoSheet_to_fill.pdf'
+        copy_and_paste_file(blank_infoSheet_source_path, blank_infoSheet_to_fill_path)
+
+        reader = PdfReader(blank_infoSheet_to_fill_path)
         writer = PdfWriter()
 
         writer.append(reader)
@@ -16,13 +47,21 @@ def fill_infoSheet (dict_data, contract_number, employer_hkid):
         with open(employer_hkid + "_" + contract_number + "_infoSheet.pdf", "wb") as output_stream:
             writer.write(output_stream)
 
+        # Remove the copied PDF that undergone above steps
+        os.remove(blank_infoSheet_to_fill_path)
+
         print("infoSheet done")
     except Exception as e:
         print(f'Error: {e}')
 
 def fill_transmittalForm (dict_data, contract_number, employer_hkid):
     try:
-        reader = PdfReader('blank_PDF/blank_transmittalForm.pdf')
+        # Make a copy of original file then append the copied PDF
+        blank_transmittalForm_source_path = 'blank_PDF/blank_transmittalForm.pdf'
+        blank_transmittalForm_to_fill_path = 'blank_PDF/blank_transmittalForm_to_fill.pdf'
+        copy_and_paste_file(blank_transmittalForm_source_path, blank_transmittalForm_to_fill_path)
+
+        reader = PdfReader(blank_transmittalForm_to_fill_path)
         writer = PdfWriter()
         
         writer.append(reader)
@@ -33,13 +72,21 @@ def fill_transmittalForm (dict_data, contract_number, employer_hkid):
         with open(employer_hkid + "_" + contract_number + "_transmittalForm.pdf", "wb") as output_stream:
             writer.write(output_stream)
 
+        # Remove the copied PDF that undergone above steps
+        os.remove(blank_transmittalForm_to_fill_path)
+
         print("Transmittal form done")
     except Exception as e:
         print(f'Error: {e}')
 
 def fill_owwa(dict_data, contract_number, employer_hkid):
     try:
-        reader = PdfReader('blank_PDF/blank_owwa.pdf')
+        # Make a copy of original file then append the copied PDF
+        blank_owwa_source_path = 'blank_PDF/blank_owwa.pdf'
+        blank_owwa_to_fill_path = 'blank_PDF/blank_owwa_to_fill.pdf'
+        copy_and_paste_file(blank_owwa_source_path, blank_owwa_to_fill_path)
+
+        reader = PdfReader(blank_owwa_to_fill_path)
         writer = PdfWriter()
 
         writer.append(reader)
@@ -50,13 +97,22 @@ def fill_owwa(dict_data, contract_number, employer_hkid):
         with open(employer_hkid + "_" + contract_number + "_owwa.pdf", "wb") as output_stream:
             writer.write(output_stream)
 
+
+        # Remove the copied PDF that undergone above steps
+        os.remove(blank_owwa_to_fill_path)
+
         print("OWWA form done")
     except Exception as e:
         print(f'Error: {e}')
 
 def fill_id407(dict_data, contract_number, employer_hkid):
     try:
-        reader = PdfReader('blank_PDF/blank_id407.pdf')
+        # Make a copy of original file then append the copied PDF
+        blank_id407_source_path = 'blank_PDF/blank_id407.pdf'
+        blank_id407_to_fill_path = 'blank_PDF/blank_id407_to_fill.pdf'
+        copy_and_paste_file(blank_id407_source_path, blank_id407_to_fill_path)
+
+        reader = PdfReader(blank_id407_to_fill_path)
         writer = PdfWriter()
 
         writer.append(reader)
@@ -67,13 +123,21 @@ def fill_id407(dict_data, contract_number, employer_hkid):
         with open(employer_hkid + "_" + contract_number + "_id407.pdf", "wb") as output_stream:
             writer.write(output_stream)
 
+        # Remove the copied PDF that undergone above steps
+        os.remove(blank_id407_to_fill_path)
+
         print("id407 done")
     except Exception as e:
         print(f'Error: {e}')
 
 def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_hkid):
     try:
-        reader = PdfReader('blank_PDF/blank_golden_joy_acknowledgement_confirmation.pdf')
+        # Make a copy of original file then append the copied PDF
+        blank_golden_joy_acknowledgement_confirmation_source_path = 'blank_PDF/blank_golden_joy_acknowledgement_confirmation.pdf'
+        blank_golden_joy_acknowledgement_confirmation_to_fill_path = 'blank_PDF/blank_golden_joy_acknowledgement_confirmation_to_fill.pdf'
+        copy_and_paste_file(blank_golden_joy_acknowledgement_confirmation_source_path, blank_golden_joy_acknowledgement_confirmation_to_fill_path)
+
+        reader = PdfReader(blank_golden_joy_acknowledgement_confirmation_to_fill_path)
         writer = PdfWriter()
 
         writer.append(reader)
@@ -83,6 +147,9 @@ def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_
         
         with open(employer_hkid + "_" + contract_number + "_acknowledgement_confirmation.pdf", "wb") as output_stream:
             writer.write(output_stream)
+
+        # Remove the copied PDF that undergone above steps
+        os.remove(blank_golden_joy_acknowledgement_confirmation_to_fill_path)
 
         print("acknowledgement and confirmation done")
     except Exception as e:
@@ -128,7 +195,6 @@ def calculate_birthday (birthdate):
     else:
         return ""
 
-
 combined_data = {
 
     "hk_agency_name": "JOJO GOOD WELL EMPLOYMENT AGENCY LIMITED",
@@ -162,7 +228,7 @@ combined_data = {
     "employer_spouse_middle_name": "HEI",
     "employer_spouse_hkid": "Z754094(A)",
     "employer_spouse_passport_number": "",
-    "employer_address": "FLAT H 17/F BLK 4 CASCADES 93 CHUNG HAU ST HO MAN TIN KLN",
+    "employer_address": "FLAT H 17/F BLK 4 VERY VERY VERY VERY VERY VERY VERY VERY VERY LONG ADDRESS CASCADES 93 CHUNG HAU ST HO MAN TIN KLN",
     "employer_residential_type": "FLAT",
     "employer_residential_size": "500",
     "employer_house_type_remarks": "",
@@ -202,7 +268,7 @@ combined_data = {
     "helper_id522_appointment_date": "",
     "helper_hk_phone_number": "",
     "helper_philippine_phone_number": "9851485084",
-    "helper_address": "ZONE 1 PUROK 15 POBLACION COMPOSTELA DAVAO DE ORO POST CODE 8803 PHILIPPINES",
+    "helper_address": "ZONE 1 PUROK 15 VERY VERY VERY VERY VERY VERY VERY VERY VERY POBLACION COMPOSTELA DAVAO DE ORO POST CODE 8803 PHILIPPINES",
     "helper_previous_contract_number": "",
     "helper_previous_contract_finish_date": "",
     "helper_philippine_contact_person": "HAROLD RIOLALAS",
@@ -476,13 +542,20 @@ fill_acknowledgement_confirmation_form(combined_data, combined_data["contract_nu
 
 
 '''
-INFOSHEET 
-    CONTRACT ADDRESS TOO LONG DOES NOT FIT
+DONE:
+- INFOSHEET 
+    - CONTRACT ADDRESS TOO LONG DOES NOT FIT
 
 
 id407
     placement still bad
     2 years boy too small
+
+owwa
+    use new form
+
+id988a
+id988b
 
 
 create desktop icon app and run a sh base file
