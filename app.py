@@ -29,7 +29,7 @@ constant_dict = {
     "philippine_agency_phone_number": "63285264838",
     "philippine_agency_code": "MWOHK-2023-170",
     "witness1_name": "CHOW SUK FAN",
-    "witness2_name": "KATHERINE CHOW"
+    # "witness2_name": "KATHERINE CHOW"
 }
 # Create dictionaries to store user input
 employer_pane_dict = {
@@ -206,7 +206,7 @@ for key, value in employer_pane_dict.items():
         employer_layout.addWidget(text_input)
     elif key == "employer_servant_own_room":
         employer_servant_own_room_combo_box = QComboBox()
-        employer_servant_own_room_combo_box.addItems(["YES", "NO, SHARE WITH CHILD/OTHER", "NO, OTHER"])
+        employer_servant_own_room_combo_box.addItems(["YES", "NO, SHARE WITH CHILD", "NO, OTHER"])
         employer_servant_own_room_combo_box.currentIndexChanged.connect(lambda selection, key=key: employer_input_changed(employer_servant_own_room_combo_box.itemText(selection), key))
         employer_layout.addWidget(label)
         employer_layout.addWidget(employer_servant_own_room_combo_box)
