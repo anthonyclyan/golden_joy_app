@@ -528,6 +528,9 @@ def on_submit():
             max_length = [id407_helper_address_max_length_row_1, id407_helper_address_max_length_row_2, id407_helper_address_max_length_row_3]
             combined_data["id407_helper_address_1"], combined_data["id407_helper_address_2"], combined_data["id407_helper_address_3"] = split_long_string(combined_data["helper_address"], [id407_helper_address_max_length_row_1, id407_helper_address_max_length_row_2, id407_helper_address_max_length_row_3])
 
+        combined_data["commencing_on"] = combined_data["helper_previous_contract_finish_date"]
+        combined_data["dh_contract_number"] = combined_data["helper_previous_contract_number"]
+    
         # To ensure the employer address string fits in the 2 rows or 1 row if address is too long
         id407_employer_address_max_length_row_1 = 35
         id407_employer_address_max_length_row_2 = 106
