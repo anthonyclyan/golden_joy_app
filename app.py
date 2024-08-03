@@ -112,7 +112,8 @@ helper_pane_dict = {
     "helper_philippine_contact_person_relationship": "",
     "helper_philippine_contact_person_phone_number": "",
     "helper_philippine_contact_person_birthday": "",
-    "helper_philippine_contact_person_address": ""
+    "helper_philippine_contact_person_address": "",
+    "witness2_name": ""
 }
 
 # Employer pane with a vertical scroll
@@ -539,6 +540,7 @@ def on_submit():
         # Page 2
         combined_data["employer_name_for_signature"] = combined_data["employer_name"]
         combined_data["helper_name_for_signature"] = combined_data["helper_name"]
+        combined_data["witness2_name"] = combined_data["witness2_name"]
 
         # Page 3
         # Cross out FLAT/HOUSE on id407 when the residential type is HOUSE/FLAT
