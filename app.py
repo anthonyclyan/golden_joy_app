@@ -29,7 +29,7 @@ constant_dict = {
     "philippine_agency_phone_number": "63285264838",
     "philippine_agency_code": "MWOHK-2023-170",
     "witness1_name": "CHOW SUK FAN",
-    # "witness2_name": "KATHERINE CHOW"
+    "witness2_name": "KATHERINE CHOW"
 }
 # Create dictionaries to store user input
 employer_pane_dict = {
@@ -113,7 +113,6 @@ helper_pane_dict = {
     "helper_philippine_contact_person_phone_number": "",
     "helper_philippine_contact_person_birthday": "",
     "helper_philippine_contact_person_address": "",
-    "witness2_name": ""
 }
 
 # Employer pane with a vertical scroll
