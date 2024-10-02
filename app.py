@@ -38,7 +38,7 @@ employer_pane_dict = {
     "contract_number": "",
     "contract_date": "",
     "owwa_recipt_number": "",
-    "wage": "4870",     # set default wage = 4870
+    "wage": "4990",     # set default wage = 4990
     "allowance": "1236",    # set default allowance = 1236
     "other_allowance": "",
     "paid_vacation_for_renew_contract": "N/A",     # set default to N/A
@@ -113,7 +113,6 @@ helper_pane_dict = {
     "helper_philippine_contact_person_phone_number": "",
     "helper_philippine_contact_person_birthday": "",
     "helper_philippine_contact_person_address": "",
-    "witness2_name": ""
 }
 
 # Employer pane with a vertical scroll
