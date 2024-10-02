@@ -645,6 +645,8 @@ def on_submit():
         # Service Agreement
         combined_data["service_agreement_contract_date"] = datetime.now().strftime('%Y-%m-%d')
         combined_data["helper_name_consent"] = combined_data["helper_sur_name"] + " " + combined_data["helper_first_name"] + " " + combined_data["helper_middle_name"]
+        combined_data["fdh_name"] = combined_data["helper_name_consent"]
+        combined_data["service_agreement_fdh_signature_date"] = datetime.now().strftime('%Y-%m-%d')
         combined_data["service_agreement_hk_agency_signature_date"] = datetime.now().strftime('%Y-%m-%d')
     except Exception as e:
         print(f'Error: {e}')
