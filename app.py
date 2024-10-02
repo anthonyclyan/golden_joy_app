@@ -29,7 +29,7 @@ constant_dict = {
     "philippine_agency_phone_number": "63285264838",
     "philippine_agency_code": "MWOHK-2023-170",
     "witness1_name": "CHOW SUK FAN",
-    # "witness2_name": "KATHERINE CHOW"
+    "witness2_name": "KATHERINE CHOW"
 }
 # Create dictionaries to store user input
 employer_pane_dict = {
