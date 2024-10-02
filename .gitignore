@@ -1,0 +1,4 @@
+.DS_Store
+__pycache__/
+base_PDF/.DS_Store
+blank_PDF/.DS_Store
