@@ -106,11 +106,11 @@ def fill_id407(dict_data, contract_number, employer_hkid):
 def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_hkid):
     try:
         # Make a copy of original file then append the copied PDF
-        blank_golden_joy_acknowledgement_confirmation_source_path = 'blank_PDF/blank_golden_joy_acknowledgement_confirmation.pdf'
-        blank_golden_joy_acknowledgement_confirmation_to_fill_path = 'blank_PDF/blank_golden_joy_acknowledgement_confirmation_to_fill.pdf'
-        copy_and_paste_file(blank_golden_joy_acknowledgement_confirmation_source_path, blank_golden_joy_acknowledgement_confirmation_to_fill_path)
+        blank_acknowledgement_confirmation_source_path = 'blank_PDF/blank_good_well_acknowledgement_confirmation.pdf'
+        blank_acknowledgement_confirmation_to_fill_path = 'blank_PDF/blank_good_well_acknowledgement_confirmation_to_fill.pdf'
+        copy_and_paste_file(blank_acknowledgement_confirmation_source_path, blank_acknowledgement_confirmation_to_fill_path)
 
-        reader = PdfReader(blank_golden_joy_acknowledgement_confirmation_to_fill_path)
+        reader = PdfReader(blank_acknowledgement_confirmation_to_fill_path)
         writer = PdfWriter()
 
         writer.append(reader)
@@ -122,7 +122,7 @@ def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_
             writer.write(output_stream)
 
         # Remove the copied PDF that undergone above steps
-        os.remove(blank_golden_joy_acknowledgement_confirmation_to_fill_path)
+        os.remove(blank_acknowledgement_confirmation_to_fill_path)
 
         print("acknowledgement and confirmation done")
     except Exception as e:
@@ -131,11 +131,11 @@ def fill_acknowledgement_confirmation_form(dict_data, contract_number, employer_
 def fill_service_agreement(dict_data, contract_number, employer_hkid):
     try:
         # Make a copy of original file then append the copied PDF
-        blank_golden_joy_service_agreement_source_path = 'blank_PDF/blank_golden_joy_service_agreement.pdf'
-        blank_golden_joy_service_agreement_to_fill_path = 'blank_PDF/blank_golden_joy_service_agreement_to_fill.pdf'
-        copy_and_paste_file(blank_golden_joy_service_agreement_source_path, blank_golden_joy_service_agreement_to_fill_path)
+        blank_service_agreement_source_path = 'blank_PDF/blank_good_well_service_agreement.pdf'
+        blank_service_agreement_to_fill_path = 'blank_PDF/blank_good_well_service_agreement_to_fill.pdf'
+        copy_and_paste_file(blank_service_agreement_source_path, blank_service_agreement_to_fill_path)
 
-        reader = PdfReader(blank_golden_joy_service_agreement_to_fill_path)
+        reader = PdfReader(blank_service_agreement_to_fill_path)
         writer = PdfWriter()
 
         writer.append(reader)
@@ -147,7 +147,7 @@ def fill_service_agreement(dict_data, contract_number, employer_hkid):
             writer.write(output_stream)
 
         # Remove the copied PDF that undergone above steps
-        os.remove(blank_golden_joy_service_agreement_to_fill_path)
+        os.remove(blank_service_agreement_to_fill_path)
 
         print("service agreement done")
     except Exception as e:
